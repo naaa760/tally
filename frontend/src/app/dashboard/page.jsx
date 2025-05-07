@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { useUser } from "@clerk/nextjs";
 import {
@@ -219,6 +219,21 @@ export default function Dashboard() {
     setForms(forms.filter((form) => form.id !== formId));
     setOpenMenuId(null);
   };
+
+  // Add this useEffect to properly handle the content of the editable div
+  useEffect(() => {
+    if (formContentRef.current && formStarted && showFormBuilder) {
+      // Only set the content if the div is empty to avoid cursor jumps during editing
+      if (formContentRef.current.innerText.trim() === "") {
+        formContentRef.current.innerText = formContent;
+
+        // If there is content, hide the typing hint
+        if (formContent.trim() !== "") {
+          setShowTypingHint(false);
+        }
+      }
+    }
+  }, [formStarted, showFormBuilder]);
 
   return (
     <div className="flex h-screen bg-amber-50">
@@ -916,7 +931,6 @@ export default function Dashboard() {
                   setShowTypingHint(e.currentTarget.innerText.trim() === "");
                 }}
                 suppressContentEditableWarning={true}
-                dangerouslySetInnerHTML={{ __html: formContent }}
               ></div>
             </div>
 
