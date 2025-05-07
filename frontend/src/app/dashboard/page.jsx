@@ -39,6 +39,10 @@ export default function Dashboard() {
   const [showTypingHint, setShowTypingHint] = useState(true);
   const [openMenuId, setOpenMenuId] = useState(null);
   const [editingForm, setEditingForm] = useState(false);
+  const [editingTitleId, setEditingTitleId] = useState(null);
+  const [editingTitleValue, setEditingTitleValue] = useState("");
+  const titleEditRef = useRef(null);
+  const [currentEditingFormId, setCurrentEditingFormId] = useState(null);
 
   // Toggle sidebar
   const toggleSidebar = () => {
@@ -47,6 +51,9 @@ export default function Dashboard() {
 
   // Handle new form click
   const handleNewForm = () => {
+    setCurrentEditingFormId(null);
+    setFormTitle("Form title");
+    setFormContent("");
     setShowFormBuilder(true);
     // Focus the title input when the form builder appears
     setTimeout(() => {
@@ -90,16 +97,35 @@ export default function Dashboard() {
 
   // Handle form submission
   const handleSubmitForm = () => {
-    // Create a new form object
-    const newForm = {
-      id: Date.now().toString(),
-      title: formTitle,
-      content: formContent,
-      createdAt: new Date().toISOString(),
-    };
+    if (currentEditingFormId) {
+      // We're editing an existing form
+      setForms(
+        forms.map((form) =>
+          form.id === currentEditingFormId
+            ? {
+                ...form,
+                title: formTitle,
+                content: formContent,
+                updatedAt: new Date().toISOString(),
+              }
+            : form
+        )
+      );
 
-    // Add the new form to the forms array
-    setForms([newForm, ...forms]);
+      // Reset the editing state
+      setCurrentEditingFormId(null);
+    } else {
+      // Creating a new form
+      const newForm = {
+        id: Date.now().toString(),
+        title: formTitle,
+        content: formContent,
+        createdAt: new Date().toISOString(),
+      };
+
+      // Add the new form to the forms array
+      setForms([newForm, ...forms]);
+    }
 
     // Reset form builder state
     setShowFormBuilder(false);
@@ -129,8 +155,50 @@ export default function Dashboard() {
   };
 
   const handleRenameForm = (formId) => {
-    // Implementation will come later
-    setOpenMenuId(null);
+    const form = forms.find((f) => f.id === formId);
+    if (form) {
+      setEditingTitleId(formId);
+      setEditingTitleValue(form.title);
+      setOpenMenuId(null);
+      // Focus the title input after component updates
+      setTimeout(() => {
+        if (titleEditRef.current) {
+          titleEditRef.current.focus();
+          titleEditRef.current.select();
+        }
+      }, 50);
+    }
+  };
+
+  const handleSaveRename = (e, formId) => {
+    // Save on Enter key or blur
+    if (e.key === "Enter" || e.type === "blur") {
+      if (editingTitleValue.trim()) {
+        setForms(
+          forms.map((form) =>
+            form.id === formId
+              ? { ...form, title: editingTitleValue.trim() }
+              : form
+          )
+        );
+      }
+      setEditingTitleId(null);
+    } else if (e.key === "Escape") {
+      // Cancel on Escape key
+      setEditingTitleId(null);
+    }
+  };
+
+  const handleEditForm = (formId) => {
+    const formToEdit = forms.find((form) => form.id === formId);
+    if (formToEdit) {
+      setFormTitle(formToEdit.title);
+      setFormContent(formToEdit.content);
+      setCurrentEditingFormId(formId);
+      setShowFormBuilder(true);
+      setFormStarted(true);
+      setOpenMenuId(null);
+    }
   };
 
   const handleDuplicateForm = (formId) => {
@@ -150,13 +218,6 @@ export default function Dashboard() {
   const handleDeleteForm = (formId) => {
     setForms(forms.filter((form) => form.id !== formId));
     setOpenMenuId(null);
-  };
-
-  const handleEditForm = (formId) => {
-    // Here you would navigate to the form editor with the selected form
-    setOpenMenuId(null);
-    setEditingForm(true);
-    // Additional logic to load the form for editing
   };
 
   return (
@@ -852,10 +913,10 @@ export default function Dashboard() {
                 className="min-h-[100px] outline-none text-gray-700 text-base w-full"
                 onInput={(e) => {
                   setFormContent(e.currentTarget.innerText);
-                  // Hide hint when content exists
                   setShowTypingHint(e.currentTarget.innerText.trim() === "");
                 }}
                 suppressContentEditableWarning={true}
+                dangerouslySetInnerHTML={{ __html: formContent }}
               ></div>
             </div>
 
@@ -929,9 +990,26 @@ export default function Dashboard() {
                     >
                       <div className="flex items-center">
                         <div className="flex-1">
-                          <h3 className="text-base font-medium text-gray-800 hover:text-blue-600 cursor-pointer">
-                            {form.title}
-                          </h3>
+                          {editingTitleId === form.id ? (
+                            <input
+                              ref={titleEditRef}
+                              type="text"
+                              className="w-full text-base font-medium text-gray-800 bg-white border border-gray-300 rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                              value={editingTitleValue}
+                              onChange={(e) =>
+                                setEditingTitleValue(e.target.value)
+                              }
+                              onKeyDown={(e) => handleSaveRename(e, form.id)}
+                              onBlur={(e) => handleSaveRename(e, form.id)}
+                            />
+                          ) : (
+                            <h3
+                              className="text-base font-medium text-gray-800 hover:text-blue-600 cursor-pointer"
+                              onClick={() => handleEditForm(form.id)}
+                            >
+                              {form.title}
+                            </h3>
+                          )}
                           <div className="flex items-center mt-1 text-xs text-gray-500">
                             <span className="bg-gray-100 px-2 py-0.5 rounded mr-2">
                               Draft
