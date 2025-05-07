@@ -417,8 +417,8 @@ export default function Dashboard() {
       {showFormBuilder && !formStarted ? (
         /* Form Builder Interface - with title positioned closer to sidebar */
         <div className="flex-1 flex flex-col bg-gradient-to-br from-amber-50 via-amber-50 to-yellow-50">
-          {/* Top navigation bar */}
-          <header className="border-b border-amber-100 bg-white py-2 px-4">
+          {/* Top navigation bar with seamless gradient */}
+          <header className="bg-gradient-to-r from-amber-50 to-yellow-50 py-2 px-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-2">
                 <button
@@ -707,7 +707,8 @@ export default function Dashboard() {
       ) : showFormBuilder && formStarted ? (
         /* Form editing area - fine-tuned positioning */
         <div className="flex-1 flex flex-col overflow-y-auto bg-white">
-          <header className="border-b border-gray-100 bg-white py-2 px-4">
+          {/* Top navigation bar with seamless gradient */}
+          <header className="bg-gradient-to-r from-amber-50 to-yellow-50 py-2 px-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-2">
                 <button
