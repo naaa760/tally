@@ -36,6 +36,7 @@ export default function Dashboard() {
   const formContentRef = useRef(null);
   const titleInputRef = useRef(null);
   const startFormRef = useRef(null);
+  const [showTypingHint, setShowTypingHint] = useState(true);
 
   // Toggle sidebar
   const toggleSidebar = () => {
@@ -103,6 +104,26 @@ export default function Dashboard() {
     setFormStarted(false);
     setFormTitle("Form title");
     setFormContent("");
+  };
+
+  // Helper function to display relative time
+  const getTimeDisplay = (timestamp) => {
+    const now = new Date();
+    const createdTime = new Date(timestamp);
+    const diffInMinutes = Math.floor((now - createdTime) / (1000 * 60));
+
+    if (diffInMinutes < 1) {
+      return "just now";
+    } else if (diffInMinutes < 60) {
+      return `${diffInMinutes} ${
+        diffInMinutes === 1 ? "minute" : "minutes"
+      } ago`;
+    } else if (diffInMinutes < 1440) {
+      const hours = Math.floor(diffInMinutes / 60);
+      return `${hours} ${hours === 1 ? "hour" : "hours"} ago`;
+    } else {
+      return createdTime.toLocaleDateString();
+    }
   };
 
   return (
@@ -705,8 +726,8 @@ export default function Dashboard() {
           </div>
         </div>
       ) : showFormBuilder && formStarted ? (
-        /* Form editing area - fine-tuned positioning */
-        <div className="flex-1 flex flex-col overflow-y-auto bg-white">
+        /* Form editing area with cream/beige gradient background */
+        <div className="flex-1 flex flex-col overflow-y-auto bg-gradient-to-br from-amber-50 via-amber-50 to-yellow-50">
           {/* Top navigation bar with seamless gradient */}
           <header className="bg-gradient-to-r from-amber-50 to-yellow-50 py-2 px-4">
             <div className="flex items-center justify-between">
@@ -773,28 +794,34 @@ export default function Dashboard() {
 
             {/* Content editing area - adjusted position */}
             <div className="w-full max-w-lg mb-24">
-              <div className="flex items-center text-gray-400 mb-3 text-sm">
-                <svg
-                  className="h-4 w-4 mr-2"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={1.5}
-                    d="M4 6h16M4 12h16M4 18h7"
-                  />
-                </svg>
-                <span>Type '/' to insert blocks</span>
-              </div>
+              {showTypingHint && (
+                <div className="flex items-center text-gray-400 mb-3 text-sm">
+                  <svg
+                    className="h-4 w-4 mr-2"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={1.5}
+                      d="M4 6h16M4 12h16M4 18h7"
+                    />
+                  </svg>
+                  <span>Type '/' to insert blocks</span>
+                </div>
+              )}
 
               <div
                 ref={formContentRef}
                 contentEditable="true"
                 className="min-h-[100px] outline-none text-gray-700 text-base w-full"
-                onInput={(e) => setFormContent(e.currentTarget.innerText)}
+                onInput={(e) => {
+                  setFormContent(e.currentTarget.innerText);
+                  // Hide hint when content exists
+                  setShowTypingHint(e.currentTarget.innerText.trim() === "");
+                }}
                 suppressContentEditableWarning={true}
               ></div>
             </div>
@@ -826,55 +853,86 @@ export default function Dashboard() {
       ) : (
         /* Dashboard Main Content */
         <div className="flex-1 flex flex-col bg-gradient-to-br from-amber-50 via-amber-50 to-yellow-50">
-          <div className="flex items-center justify-center h-full">
-            <div className="text-center max-w-md px-4">
-              {forms.length > 0 ? (
-                /* Display created forms */
-                <div className="w-full">
-                  <h3 className="text-xl font-medium text-gray-900 mb-6">
-                    Your Forms
-                  </h3>
-                  <div className="grid gap-4">
-                    {forms.map((form) => (
-                      <div
-                        key={form.id}
-                        className="bg-white p-4 rounded-lg shadow-sm text-left border border-gray-200 hover:shadow-md transition"
-                      >
-                        <h4 className="text-lg font-medium text-gray-800">
-                          {form.title}
-                        </h4>
-                        <p className="text-sm text-gray-500 mt-1">
-                          Created{" "}
-                          {new Date(form.createdAt).toLocaleDateString()}
-                        </p>
-                        <div className="flex mt-3 space-x-2">
-                          <button className="text-sm text-blue-600 hover:text-blue-800">
-                            Edit
-                          </button>
-                          <button className="text-sm text-blue-600 hover:text-blue-800">
-                            Share
-                          </button>
-                          <button className="text-sm text-blue-600 hover:text-blue-800">
-                            Results
+          {/* Dashboard header with title and action buttons */}
+          <header className="bg-gradient-to-r from-amber-50 to-yellow-50 py-4 px-8 flex justify-between items-center border-b border-amber-100">
+            <h1 className="text-2xl font-medium text-gray-800">Home</h1>
+            <div className="flex items-center space-x-3">
+              <button className="px-3 py-1.5 text-sm font-medium text-gray-700 border border-gray-300 rounded-md hover:bg-gray-50 flex items-center">
+                <svg
+                  className="h-4 w-4 mr-1.5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+                  />
+                </svg>
+                New workspace
+              </button>
+              <button
+                onClick={handleNewForm}
+                className="px-3 py-1.5 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 flex items-center"
+              >
+                <PlusIcon className="h-4 w-4 mr-1.5" />
+                New form
+              </button>
+            </div>
+          </header>
+
+          {/* Dashboard content with forms list */}
+          <div className="flex-1">
+            {forms.length > 0 ? (
+              /* Forms list with new design */
+              <div className="p-8">
+                <div className="space-y-4">
+                  {/* List of forms */}
+                  {forms.map((form) => (
+                    <div
+                      key={form.id}
+                      className="bg-white rounded-md border border-gray-200 p-3 hover:shadow-sm transition"
+                    >
+                      <div className="flex items-center">
+                        <div className="flex-1">
+                          <h3 className="text-base font-medium text-gray-800 hover:text-blue-600 cursor-pointer">
+                            {form.title}
+                          </h3>
+                          <div className="flex items-center mt-1 text-xs text-gray-500">
+                            <span className="bg-gray-100 px-2 py-0.5 rounded mr-2">
+                              Draft
+                            </span>
+                            <span>Edited {getTimeDisplay(form.createdAt)}</span>
+                          </div>
+                        </div>
+                        <div className="flex space-x-1">
+                          <button className="p-1.5 text-gray-400 hover:text-gray-600 rounded-full hover:bg-gray-50">
+                            <svg
+                              className="h-4 w-4"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke="currentColor"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"
+                              />
+                            </svg>
                           </button>
                         </div>
                       </div>
-                    ))}
-                  </div>
-                  <button
-                    onClick={handleNewForm}
-                    className="inline-flex items-center px-4 py-2 mt-6 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-                  >
-                    <PlusIcon
-                      className="-ml-1 mr-2 h-5 w-5"
-                      aria-hidden="true"
-                    />
-                    New form
-                  </button>
+                    </div>
+                  ))}
                 </div>
-              ) : (
-                /* Empty state */
-                <>
+              </div>
+            ) : (
+              /* Empty state - restored to original centered layout */
+              <div className="flex items-center justify-center h-full">
+                <div className="text-center max-w-md px-4">
                   <img
                     src="/pic.png"
                     alt="No forms yet"
@@ -906,9 +964,9 @@ export default function Dashboard() {
                     />
                     New form
                   </button>
-                </>
-              )}
-            </div>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       )}
