@@ -39,7 +39,7 @@ export default function Dashboard() {
       <div
         className={`${
           sidebarOpen ? "w-60" : "w-20"
-        } transition-all duration-300 border-r border-amber-100 flex flex-col relative bg-amber-50 shadow-sm`}
+        } transition-all duration-300 border-r border-amber-100 flex flex-col relative bg-gradient-to-b from-amber-50 to-yellow-50 shadow-sm`}
       >
         {/* Sidebar toggle button */}
         <button
@@ -87,10 +87,10 @@ export default function Dashboard() {
               href="/dashboard"
               className={`flex items-center px-2 py-2 ${
                 sidebarOpen ? "justify-start" : "justify-center"
-              } text-amber-900 rounded-md bg-amber-100 hover:bg-amber-200 transition`}
+              } text-gray-900 rounded-md bg-gray-100 hover:bg-gray-200 transition`}
             >
               <HomeIcon
-                className={`h-5 w-5 text-amber-700 ${sidebarOpen && "mr-3"}`}
+                className={`h-5 w-5 text-gray-500 ${sidebarOpen && "mr-3"}`}
               />
               {sidebarOpen && <span>Home</span>}
             </Link>
@@ -98,7 +98,7 @@ export default function Dashboard() {
             <button
               className={`flex items-center px-2 py-2 ${
                 sidebarOpen ? "justify-start" : "justify-center"
-              } text-gray-600 rounded-md w-full text-left hover:bg-amber-100`}
+              } text-gray-600 rounded-md w-full text-left hover:bg-gray-100`}
             >
               <MagnifyingGlassIcon
                 className={`h-5 w-5 text-gray-500 ${sidebarOpen && "mr-3"}`}
@@ -109,7 +109,7 @@ export default function Dashboard() {
             <button
               className={`flex items-center px-2 py-2 ${
                 sidebarOpen ? "justify-start" : "justify-center"
-              } text-gray-600 rounded-md w-full text-left hover:bg-amber-100`}
+              } text-gray-600 rounded-md w-full text-left hover:bg-gray-100`}
             >
               <UserGroupIcon
                 className={`h-5 w-5 text-gray-500 ${sidebarOpen && "mr-3"}`}
@@ -120,7 +120,7 @@ export default function Dashboard() {
             <button
               className={`flex items-center px-2 py-2 ${
                 sidebarOpen ? "justify-start" : "justify-center"
-              } text-gray-600 rounded-md w-full text-left hover:bg-amber-100`}
+              } text-gray-600 rounded-md w-full text-left hover:bg-gray-100`}
             >
               <GlobeAltIcon
                 className={`h-5 w-5 text-gray-500 ${sidebarOpen && "mr-3"}`}
@@ -131,7 +131,7 @@ export default function Dashboard() {
             <button
               className={`flex items-center px-2 py-2 ${
                 sidebarOpen ? "justify-start" : "justify-center"
-              } text-gray-600 rounded-md w-full text-left hover:bg-amber-100`}
+              } text-gray-600 rounded-md w-full text-left hover:bg-gray-100`}
             >
               <Cog6ToothIcon
                 className={`h-5 w-5 text-gray-500 ${sidebarOpen && "mr-3"}`}
@@ -166,7 +166,7 @@ export default function Dashboard() {
           {/* Workspaces section */}
           <div className="mt-8">
             {sidebarOpen && (
-              <h3 className="px-3 text-xs font-semibold text-amber-700 uppercase tracking-wider">
+              <h3 className="px-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">
                 Workspaces
               </h3>
             )}
@@ -174,7 +174,7 @@ export default function Dashboard() {
               <button
                 className={`flex items-center px-2 py-2 ${
                   sidebarOpen ? "justify-start" : "justify-center"
-                } text-gray-600 rounded-md w-full text-left hover:bg-amber-100`}
+                } text-gray-600 rounded-md w-full text-left hover:bg-gray-100`}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -198,7 +198,7 @@ export default function Dashboard() {
           {/* Product section */}
           <div className="mt-8">
             {sidebarOpen && (
-              <h3 className="px-3 text-xs font-semibold text-amber-700 uppercase tracking-wider">
+              <h3 className="px-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">
                 Product
               </h3>
             )}
@@ -206,7 +206,7 @@ export default function Dashboard() {
               <button
                 className={`flex items-center px-2 py-2 ${
                   sidebarOpen ? "justify-start" : "justify-center"
-                } text-gray-600 rounded-md w-full text-left hover:bg-amber-100`}
+                } text-gray-600 rounded-md w-full text-left hover:bg-gray-100`}
               >
                 <DocumentTextIcon
                   className={`h-5 w-5 text-gray-500 ${sidebarOpen && "mr-3"}`}
@@ -216,7 +216,7 @@ export default function Dashboard() {
               <button
                 className={`flex items-center px-2 py-2 ${
                   sidebarOpen ? "justify-start" : "justify-center"
-                } text-gray-600 rounded-md w-full text-left hover:bg-amber-100`}
+                } text-gray-600 rounded-md w-full text-left hover:bg-gray-100`}
               >
                 <StarIcon
                   className={`h-5 w-5 text-gray-500 ${sidebarOpen && "mr-3"}`}
@@ -226,7 +226,7 @@ export default function Dashboard() {
               <button
                 className={`flex items-center px-2 py-2 ${
                   sidebarOpen ? "justify-start" : "justify-center"
-                } text-gray-600 rounded-md w-full text-left hover:bg-amber-100`}
+                } text-gray-600 rounded-md w-full text-left hover:bg-gray-100`}
               >
                 <MapIcon
                   className={`h-5 w-5 text-gray-500 ${sidebarOpen && "mr-3"}`}
@@ -236,7 +236,7 @@ export default function Dashboard() {
               <button
                 className={`flex items-center px-2 py-2 ${
                   sidebarOpen ? "justify-start" : "justify-center"
-                } text-gray-600 rounded-md w-full text-left hover:bg-amber-100`}
+                } text-gray-600 rounded-md w-full text-left hover:bg-gray-100`}
               >
                 <HeartIcon
                   className={`h-5 w-5 text-gray-500 ${sidebarOpen && "mr-3"}`}
@@ -246,7 +246,7 @@ export default function Dashboard() {
               <button
                 className={`flex items-center px-2 py-2 ${
                   sidebarOpen ? "justify-start" : "justify-center"
-                } text-gray-600 rounded-md w-full text-left hover:bg-amber-100`}
+                } text-gray-600 rounded-md w-full text-left hover:bg-gray-100`}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -267,7 +267,7 @@ export default function Dashboard() {
               <button
                 className={`flex items-center px-2 py-2 ${
                   sidebarOpen ? "justify-start" : "justify-center"
-                } text-gray-600 rounded-md w-full text-left hover:bg-amber-100`}
+                } text-gray-600 rounded-md w-full text-left hover:bg-gray-100`}
               >
                 <TrashIcon
                   className={`h-5 w-5 text-gray-500 ${sidebarOpen && "mr-3"}`}
@@ -280,7 +280,7 @@ export default function Dashboard() {
           {/* Help section */}
           <div className="mt-8">
             {sidebarOpen && (
-              <h3 className="px-3 text-xs font-semibold text-amber-700 uppercase tracking-wider">
+              <h3 className="px-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">
                 Help
               </h3>
             )}
@@ -288,7 +288,7 @@ export default function Dashboard() {
               <button
                 className={`flex items-center px-2 py-2 ${
                   sidebarOpen ? "justify-start" : "justify-center"
-                } text-gray-600 rounded-md w-full text-left hover:bg-amber-100`}
+                } text-gray-600 rounded-md w-full text-left hover:bg-gray-100`}
               >
                 <QuestionMarkCircleIcon
                   className={`h-5 w-5 text-gray-500 ${sidebarOpen && "mr-3"}`}
@@ -298,7 +298,7 @@ export default function Dashboard() {
               <button
                 className={`flex items-center px-2 py-2 ${
                   sidebarOpen ? "justify-start" : "justify-center"
-                } text-gray-600 rounded-md w-full text-left hover:bg-amber-100`}
+                } text-gray-600 rounded-md w-full text-left hover:bg-gray-100`}
               >
                 <BookOpenIcon
                   className={`h-5 w-5 text-gray-500 ${sidebarOpen && "mr-3"}`}
@@ -308,7 +308,7 @@ export default function Dashboard() {
               <button
                 className={`flex items-center px-2 py-2 ${
                   sidebarOpen ? "justify-start" : "justify-center"
-                } text-gray-600 rounded-md w-full text-left hover:bg-amber-100`}
+                } text-gray-600 rounded-md w-full text-left hover:bg-gray-100`}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -329,7 +329,7 @@ export default function Dashboard() {
               <button
                 className={`flex items-center px-2 py-2 ${
                   sidebarOpen ? "justify-start" : "justify-center"
-                } text-gray-600 rounded-md w-full text-left hover:bg-amber-100`}
+                } text-gray-600 rounded-md w-full text-left hover:bg-gray-100`}
               >
                 <ChatBubbleLeftRightIcon
                   className={`h-5 w-5 text-gray-500 ${sidebarOpen && "mr-3"}`}
@@ -346,9 +346,10 @@ export default function Dashboard() {
         <div className="flex items-center justify-center h-full">
           <div className="text-center max-w-md px-4">
             <img
-              src="/images/empty-forms.svg"
+              src="/pic.png"
               alt="No forms yet"
-              className="mx-auto h-40 w-40 mb-6"
+              className="mx-auto max-w-full w-auto h-auto object-contain mb-6"
+              style={{ maxHeight: "180px" }}
               onError={(e) => {
                 e.target.onerror = null;
                 e.target.src =
