@@ -357,17 +357,17 @@ export default function Dashboard() {
 
       {/* Main content area */}
       {showFormBuilder ? (
-        /* Form Builder Interface with content shifted more down */
-        <div className="flex-1 flex flex-col bg-white">
-          {/* Form canvas with content shifted more down */}
+        /* Form Builder Interface with thicker title and cream background */
+        <div className="flex-1 flex flex-col bg-gradient-to-b from-amber-50 to-yellow-50">
+          {/* Form canvas with title adjustments */}
           <div className="flex-1 pt-32 px-12">
             {" "}
             {/* Increased top padding to push content down */}
             <div className="max-w-3xl mx-auto mt-16">
               {" "}
               {/* Changed from negative to positive margin */}
-              {/* Form title with more space */}
-              <h1 className="text-4xl font-light text-gray-400 mb-20 mt-0">
+              {/* Form title with increased size */}
+              <h1 className="text-6xl font-normal text-gray-500 mb-20 mt-0">
                 Form title
               </h1>
               {/* Document/template options with perfect alignment */}
