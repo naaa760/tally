@@ -49,6 +49,7 @@ export default function FormBuilder() {
         <header className="bg-white shadow-sm border-b border-gray-200">
           <div className="container mx-auto px-4 py-4 flex justify-between items-center">
             <div className="flex items-center">
+              {/* Just keep the form title input */}
               <input
                 type="text"
                 value={formTitle}

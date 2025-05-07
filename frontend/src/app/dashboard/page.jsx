@@ -43,6 +43,8 @@ export default function Dashboard() {
   const [editingTitleValue, setEditingTitleValue] = useState("");
   const titleEditRef = useRef(null);
   const [currentEditingFormId, setCurrentEditingFormId] = useState(null);
+  const [contentHovered, setContentHovered] = useState(false);
+  const [titleAreaHovered, setTitleAreaHovered] = useState(false);
 
   // Toggle sidebar
   const toggleSidebar = () => {
@@ -608,16 +610,23 @@ export default function Dashboard() {
           {/* Form setup area with better distance from sidebar */}
           <div className="flex-1 overflow-y-auto">
             <div className="ml-48 pt-40 max-w-lg">
-              {/* Form title with better spacing */}
-              <input
-                ref={titleInputRef}
-                type="text"
-                value={formTitle}
-                onChange={(e) => setFormTitle(e.target.value)}
-                onKeyDown={handleTitleKeyDown}
-                className="text-5xl font-normal text-gray-400 mb-14 w-full bg-transparent border-none focus:outline-none focus:ring-0 text-left"
-                placeholder="Form title"
-              />
+              {/* Form title with hover options */}
+              <div
+                className="relative"
+                onMouseEnter={() => setTitleAreaHovered(true)}
+                onMouseLeave={() => setTitleAreaHovered(false)}
+              >
+                {/* Keep your existing title input - no changes to it */}
+                <input
+                  ref={titleInputRef}
+                  type="text"
+                  value={formTitle}
+                  onChange={(e) => setFormTitle(e.target.value)}
+                  onKeyDown={handleTitleKeyDown}
+                  className="text-5xl font-normal text-gray-400 mb-14 w-full bg-transparent border-none focus:outline-none focus:ring-0 text-left"
+                  placeholder="Form title"
+                />
+              </div>
 
               {/* Options directly below title */}
               <div className="space-y-4 mb-8">
@@ -901,37 +910,68 @@ export default function Dashboard() {
               {formTitle}
             </h1>
 
-            {/* Content editing area - adjusted position */}
-            <div className="w-full max-w-lg mb-24">
-              {showTypingHint && (
-                <div className="flex items-center text-gray-400 mb-3 text-sm">
-                  <svg
-                    className="h-4 w-4 mr-2"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={1.5}
-                      d="M4 6h16M4 12h16M4 18h7"
-                    />
-                  </svg>
-                  <span>Type '/' to insert blocks</span>
+            {/* Form content editing area with hover options */}
+            <div className="relative">
+              {/* Hover toolbar - appears above content when hovered */}
+              {contentHovered && (
+                <div className="absolute -top-10 left-1/2 transform -translate-x-1/2 z-10 transition-opacity duration-150">
+                  <div className="bg-white shadow-sm rounded-full px-3 py-1.5 flex space-x-4 text-sm text-gray-600 border border-gray-200">
+                    <button className="flex items-center hover:text-blue-600 transition-colors">
+                      <svg
+                        className="h-4 w-4 mr-1.5"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+                        />
+                      </svg>
+                      Add cover
+                    </button>
+                    <button className="flex items-center hover:text-blue-600 transition-colors">
+                      <svg
+                        className="h-4 w-4 mr-1.5"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"
+                        />
+                      </svg>
+                      Add logo
+                    </button>
+                  </div>
                 </div>
               )}
 
+              {/* Content editable area */}
               <div
                 ref={formContentRef}
                 contentEditable="true"
                 className="min-h-[100px] outline-none text-gray-700 text-base w-full"
+                onMouseEnter={() => setContentHovered(true)}
+                onMouseLeave={() => setContentHovered(false)}
                 onInput={(e) => {
                   setFormContent(e.currentTarget.innerText);
                   setShowTypingHint(e.currentTarget.innerText.trim() === "");
                 }}
                 suppressContentEditableWarning={true}
               ></div>
+
+              {/* Typing hint */}
+              {showTypingHint && (
+                <div className="absolute top-0 left-0 text-gray-400 pointer-events-none">
+                  Start typing...
+                </div>
+              )}
             </div>
 
             {/* Submit button - adjusted position */}
