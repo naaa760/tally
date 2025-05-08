@@ -1086,7 +1086,204 @@ export default function Dashboard() {
                               Long answer
                             </button>
 
-                            {/* Add other question types here as needed */}
+                            <button className="flex items-center w-full px-2 py-2 text-sm text-left hover:bg-gray-100 rounded-md">
+                              <svg
+                                className="h-5 w-5 mr-2 text-gray-400"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth={1.5}
+                                  d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                                />
+                              </svg>
+                              Multiple choice
+                            </button>
+
+                            <button className="flex items-center w-full px-2 py-2 text-sm text-left hover:bg-gray-100 rounded-md">
+                              <svg
+                                className="h-5 w-5 mr-2 text-gray-400"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth={1.5}
+                                  d="M5 13l4 4L19 7"
+                                />
+                              </svg>
+                              Checkboxes
+                            </button>
+
+                            <button className="flex items-center w-full px-2 py-2 text-sm text-left hover:bg-gray-100 rounded-md">
+                              <svg
+                                className="h-5 w-5 mr-2 text-gray-400"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth={1.5}
+                                  d="M19 9l-7 7-7-7"
+                                />
+                              </svg>
+                              Dropdown
+                            </button>
+
+                            <button className="flex items-center w-full px-2 py-2 text-sm text-left hover:bg-gray-100 rounded-md">
+                              <svg
+                                className="h-5 w-5 mr-2 text-gray-400"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth={1.5}
+                                  d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                                />
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth={1.5}
+                                  d="M9 12l2 2 4-4"
+                                />
+                              </svg>
+                              Multi-select
+                            </button>
+
+                            <button className="flex items-center w-full px-2 py-2 text-sm text-left hover:bg-gray-100 rounded-md">
+                              <svg
+                                className="h-5 w-5 mr-2 text-gray-400"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth={1.5}
+                                  d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14"
+                                />
+                              </svg>
+                              Number
+                            </button>
+
+                            <button className="flex items-center w-full px-2 py-2 text-sm text-left hover:bg-gray-100 rounded-md">
+                              <svg
+                                className="h-5 w-5 mr-2 text-gray-400"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth={1.5}
+                                  d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"
+                                />
+                              </svg>
+                              Email
+                            </button>
+
+                            <button className="flex items-center w-full px-2 py-2 text-sm text-left hover:bg-gray-100 rounded-md">
+                              <svg
+                                className="h-5 w-5 mr-2 text-gray-400"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth={1.5}
+                                  d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+                                />
+                              </svg>
+                              Phone number
+                            </button>
+
+                            <button className="flex items-center w-full px-2 py-2 text-sm text-left hover:bg-gray-100 rounded-md">
+                              <svg
+                                className="h-5 w-5 mr-2 text-gray-400"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth={1.5}
+                                  d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101"
+                                />
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth={1.5}
+                                  d="M10.172 13.828a4 4 0 015.656 0l4 4a4 4 0 01-5.656 5.656l-1.102-1.101"
+                                />
+                              </svg>
+                              Link
+                            </button>
+
+                            <button className="flex items-center w-full px-2 py-2 text-sm text-left hover:bg-gray-100 rounded-md">
+                              <svg
+                                className="h-5 w-5 mr-2 text-gray-400"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth={1.5}
+                                  d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"
+                                />
+                              </svg>
+                              File upload
+                            </button>
+
+                            <button className="flex items-center w-full px-2 py-2 text-sm text-left hover:bg-gray-100 rounded-md">
+                              <svg
+                                className="h-5 w-5 mr-2 text-gray-400"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth={1.5}
+                                  d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                                />
+                              </svg>
+                              Date
+                            </button>
+
+                            <button className="flex items-center w-full px-2 py-2 text-sm text-left hover:bg-gray-100 rounded-md">
+                              <svg
+                                className="h-5 w-5 mr-2 text-gray-400"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth={1.5}
+                                  d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                                />
+                              </svg>
+                              Time
+                            </button>
                           </div>
                         </div>
                       </div>
