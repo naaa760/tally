@@ -245,17 +245,21 @@ export default function Dashboard() {
     }
   }, [formStarted, showFormBuilder]);
 
-  // Add this function to handle block insertion
+  // Update the handleInsertBlock function to open the menu
   const handleInsertBlock = () => {
     // Toggle block menu open/closed
-    setBlockMenuOpen(!blockMenuOpen);
+    setBlockMenuOpen(true);
     setShowInsertTooltip(false);
   };
 
-  // Add this useEffect to handle outside clicks to close the block menu
+  // Keep the click outside handler to close the menu when clicking elsewhere
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (blockMenuOpen && !event.target.closest(".insert-block-button")) {
+      if (
+        blockMenuOpen &&
+        !event.target.closest(".block-menu") &&
+        !event.target.closest(".insert-block-button")
+      ) {
         setBlockMenuOpen(false);
       }
     };
@@ -939,8 +943,8 @@ export default function Dashboard() {
               {formTitle}
             </h1>
 
-            {/* Form content editing area with hover options */}
-            <div className="w-full max-w-lg mb-24 relative">
+            {/* Form content area with insert button - FIX ALIGNMENT */}
+            <div className="w-full max-w-lg mb-24">
               {/* Typing hint */}
               {showTypingHint && (
                 <div className="flex items-center text-gray-400 mb-3 text-sm">
@@ -954,32 +958,18 @@ export default function Dashboard() {
                       strokeLinecap="round"
                       strokeLinejoin="round"
                       strokeWidth={1.5}
-                      d="M4 6h16M4 12h16M4 18h7"
+                      d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
                     />
                   </svg>
-                  <span>Type '/' to insert blocks</span>
+                  Start typing to add content
                 </div>
               )}
 
-              {/* Form content area with stable insert button */}
-              <div
-                className="relative min-h-[120px] group"
-                onMouseEnter={() => setShowInsertButton(true)}
-                onMouseLeave={(e) => {
-                  // Don't hide if hovering over the button
-                  const relatedTarget = e.relatedTarget;
-                  if (
-                    !relatedTarget ||
-                    !relatedTarget.closest(".insert-block-button")
-                  ) {
-                    setShowInsertButton(false);
-                    setShowInsertTooltip(false);
-                  }
-                }}
-              >
-                {/* The insert block button - now stable position */}
+              {/* FIXED LAYOUT - Content area and button side by side */}
+              <div className="flex items-start">
+                {/* The insert block button */}
                 <div
-                  className="absolute -left-8 top-0 opacity-0 group-hover:opacity-100 transition-opacity insert-block-button"
+                  className="mr-2 mt-1 insert-block-button opacity-70 hover:opacity-100 transition-opacity"
                   onMouseEnter={() => setShowInsertTooltip(true)}
                   onMouseLeave={() => setShowInsertTooltip(false)}
                 >
@@ -1003,245 +993,18 @@ export default function Dashboard() {
                   </button>
 
                   {/* Tooltip that appears on hover */}
-                  {showInsertTooltip && !blockMenuOpen && (
+                  {showInsertTooltip && (
                     <div className="absolute left-7 top-0 bg-gray-800 text-white text-xs rounded py-1 px-2 whitespace-nowrap z-10">
                       Insert block below
                     </div>
                   )}
-
-                  {/* Block menu that appears when clicking the + button */}
-                  {blockMenuOpen && (
-                    <div className="absolute left-7 top-0 bg-white rounded-lg shadow-xl border border-gray-200 w-[540px] z-20 overflow-hidden">
-                      <div className="p-3 border-b border-gray-200">
-                        <div className="relative">
-                          <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
-                            <svg
-                              className="h-4 w-4 text-gray-400"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              stroke="currentColor"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                              />
-                            </svg>
-                          </div>
-                          <input
-                            type="text"
-                            placeholder="Find questions, input fields and layout options..."
-                            className="pl-10 w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
-                            autoFocus
-                          />
-                        </div>
-                      </div>
-
-                      <div className="flex">
-                        {/* Left side - Question types */}
-                        <div className="w-1/2 border-r border-gray-200 max-h-[400px] overflow-y-auto">
-                          <div className="p-2">
-                            <div className="text-xs font-medium text-gray-500 px-2 py-1">
-                              Questions
-                            </div>
-
-                            <div className="py-1">
-                              <button className="flex items-center w-full px-2 py-2 text-sm text-left hover:bg-gray-100 rounded-md">
-                                <svg
-                                  className="h-5 w-5 mr-2 text-gray-400"
-                                  fill="none"
-                                  viewBox="0 0 24 24"
-                                  stroke="currentColor"
-                                >
-                                  <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={1.5}
-                                    d="M4 6h16M4 12h8"
-                                  />
-                                </svg>
-                                Short answer
-                              </button>
-
-                              <button className="flex items-center w-full px-2 py-2 text-sm text-left hover:bg-gray-100 rounded-md">
-                                <svg
-                                  className="h-5 w-5 mr-2 text-gray-400"
-                                  fill="none"
-                                  viewBox="0 0 24 24"
-                                  stroke="currentColor"
-                                >
-                                  <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={1.5}
-                                    d="M4 6h16M4 12h16M4 18h16"
-                                  />
-                                </svg>
-                                Long answer
-                              </button>
-
-                              <button className="flex items-center w-full px-2 py-2 text-sm text-left hover:bg-gray-100 rounded-md">
-                                <svg
-                                  className="h-5 w-5 mr-2 text-gray-400"
-                                  fill="none"
-                                  viewBox="0 0 24 24"
-                                  stroke="currentColor"
-                                >
-                                  <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={1.5}
-                                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                                  />
-                                </svg>
-                                Multiple choice
-                              </button>
-
-                              <button className="flex items-center w-full px-2 py-2 text-sm text-left hover:bg-gray-100 rounded-md">
-                                <svg
-                                  className="h-5 w-5 mr-2 text-gray-400"
-                                  fill="none"
-                                  viewBox="0 0 24 24"
-                                  stroke="currentColor"
-                                >
-                                  <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={1.5}
-                                    d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
-                                  />
-                                </svg>
-                                Checkboxes
-                              </button>
-
-                              <button className="flex items-center w-full px-2 py-2 text-sm text-left hover:bg-gray-100 rounded-md">
-                                <svg
-                                  className="h-5 w-5 mr-2 text-gray-400"
-                                  fill="none"
-                                  viewBox="0 0 24 24"
-                                  stroke="currentColor"
-                                >
-                                  <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={1.5}
-                                    d="M19 9l-7 7-7-7"
-                                  />
-                                </svg>
-                                Dropdown
-                              </button>
-
-                              <button className="flex items-center w-full px-2 py-2 text-sm text-left hover:bg-gray-100 rounded-md">
-                                <svg
-                                  className="h-5 w-5 mr-2 text-gray-400"
-                                  fill="none"
-                                  viewBox="0 0 24 24"
-                                  stroke="currentColor"
-                                >
-                                  <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={1.5}
-                                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                                  />
-                                  <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={1.5}
-                                    d="M9 12l2 2 4-4"
-                                  />
-                                </svg>
-                                Multi-select
-                              </button>
-
-                              <button className="flex items-center w-full px-2 py-2 text-sm text-left hover:bg-gray-100 rounded-md">
-                                <svg
-                                  className="h-5 w-5 mr-2 text-gray-400"
-                                  fill="none"
-                                  viewBox="0 0 24 24"
-                                  stroke="currentColor"
-                                >
-                                  <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={1.5}
-                                    d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14"
-                                  />
-                                </svg>
-                                Number
-                              </button>
-
-                              <button className="flex items-center w-full px-2 py-2 text-sm text-left hover:bg-gray-100 rounded-md">
-                                <svg
-                                  className="h-5 w-5 mr-2 text-gray-400"
-                                  fill="none"
-                                  viewBox="0 0 24 24"
-                                  stroke="currentColor"
-                                >
-                                  <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={1.5}
-                                    d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"
-                                  />
-                                </svg>
-                                Email
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-
-                        {/* Right side - Insert anything */}
-                        <div className="w-1/2 flex flex-col items-center justify-center p-6 bg-gray-50">
-                          <div className="rounded-full bg-white p-3 mb-4 border border-gray-200">
-                            <svg
-                              className="h-6 w-6 text-gray-400"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              stroke="currentColor"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={1.5}
-                                d="M12 4v16m8-8H4"
-                              />
-                            </svg>
-                          </div>
-                          <h3 className="text-base font-medium text-gray-800 mb-2">
-                            Insert anything
-                          </h3>
-                          <p className="text-sm text-gray-500 text-center mb-4">
-                            Search for any input field or layout option. Use
-                          </p>
-                          <div className="flex items-center justify-center">
-                            <span className="px-1.5 py-0.5 border border-gray-300 rounded text-xs mr-1">
-                              ↑
-                            </span>
-                            <span className="px-1.5 py-0.5 border border-gray-300 rounded text-xs ml-1 mr-1">
-                              ↓
-                            </span>
-                            <span className="text-xs text-gray-500 mx-1">
-                              to browse the list, then hit
-                            </span>
-                            <span className="px-2 py-0.5 border border-gray-300 rounded text-xs mx-1">
-                              Enter
-                            </span>
-                          </div>
-                          <p className="text-xs text-gray-500 mt-2">
-                            to insert the selected block.
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  )}
                 </div>
 
+                {/* The actual editable content area */}
                 <div
                   ref={formContentRef}
                   contentEditable="true"
-                  className="min-h-[100px] outline-none text-gray-700 text-base w-full"
+                  className="flex-1 min-h-[100px] outline-none text-gray-700 text-base p-2 border border-transparent focus:border-gray-200 rounded-md"
                   onInput={(e) => {
                     setFormContent(e.currentTarget.innerText);
                     setShowTypingHint(e.currentTarget.innerText.trim() === "");
@@ -1249,29 +1012,130 @@ export default function Dashboard() {
                   suppressContentEditableWarning={true}
                 ></div>
               </div>
-            </div>
 
-            {/* Submit button - adjusted position */}
-            <div className="mb-20">
-              <button
-                onClick={handleSubmitForm}
-                className="bg-black text-white px-4 py-2 rounded-md hover:bg-gray-800 inline-flex items-center"
-              >
-                Submit
-                <svg
-                  className="ml-2 h-4 w-4"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M14 5l7 7m0 0l-7 7m7-7H3"
-                  />
-                </svg>
-              </button>
+              {/* Block menu that appears when clicking the + button */}
+              {blockMenuOpen && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center">
+                  <div className="bg-white rounded-lg shadow-xl border border-gray-200 w-[540px] overflow-hidden block-menu">
+                    <div className="p-3 border-b border-gray-200">
+                      <div className="relative">
+                        <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
+                          <svg
+                            className="h-4 w-4 text-gray-400"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                            />
+                          </svg>
+                        </div>
+                        <input
+                          type="text"
+                          placeholder="Find questions, input fields and layout options..."
+                          className="pl-10 w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
+                          autoFocus
+                        />
+                      </div>
+                    </div>
+
+                    <div className="flex">
+                      {/* Left side - Question types */}
+                      <div className="w-1/2 border-r border-gray-200 max-h-[400px] overflow-y-auto">
+                        <div className="p-2">
+                          <div className="text-xs font-medium text-gray-500 px-2 py-1">
+                            Questions
+                          </div>
+
+                          <div className="py-1">
+                            <button className="flex items-center w-full px-2 py-2 text-sm text-left hover:bg-gray-100 rounded-md">
+                              <svg
+                                className="h-5 w-5 mr-2 text-gray-400"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth={1.5}
+                                  d="M4 6h16M4 12h8"
+                                />
+                              </svg>
+                              Short answer
+                            </button>
+
+                            <button className="flex items-center w-full px-2 py-2 text-sm text-left hover:bg-gray-100 rounded-md">
+                              <svg
+                                className="h-5 w-5 mr-2 text-gray-400"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth={1.5}
+                                  d="M4 6h16M4 12h16M4 18h16"
+                                />
+                              </svg>
+                              Long answer
+                            </button>
+
+                            {/* Add other question types here as needed */}
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Right side - Insert anything */}
+                      <div className="w-1/2 flex flex-col items-center justify-center p-6 bg-gray-50">
+                        <div className="rounded-full bg-white p-3 mb-4 border border-gray-200">
+                          <svg
+                            className="h-6 w-6 text-gray-400"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={1.5}
+                              d="M12 4v16m8-8H4"
+                            />
+                          </svg>
+                        </div>
+                        <h3 className="text-base font-medium text-gray-800 mb-2">
+                          Insert anything
+                        </h3>
+                        <p className="text-sm text-gray-500 text-center mb-4">
+                          Search for any input field or layout option. Use
+                        </p>
+                        <div className="flex items-center justify-center">
+                          <span className="px-1.5 py-0.5 border border-gray-300 rounded text-xs mr-1">
+                            ↑
+                          </span>
+                          <span className="px-1.5 py-0.5 border border-gray-300 rounded text-xs ml-1 mr-1">
+                            ↓
+                          </span>
+                          <span className="text-xs text-gray-500 mx-1">
+                            to browse the list, then hit
+                          </span>
+                          <span className="px-2 py-0.5 border border-gray-300 rounded text-xs mx-1">
+                            Enter
+                          </span>
+                        </div>
+                        <p className="text-xs text-gray-500 mt-2">
+                          to insert the selected block.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>
