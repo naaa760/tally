@@ -967,9 +967,9 @@ export default function Dashboard() {
 
               {/* FIXED LAYOUT - Content area and button side by side */}
               <div className="flex items-start">
-                {/* The insert block button */}
+                {/* The insert block button with improved tooltip positioning */}
                 <div
-                  className="mr-2 mt-1 insert-block-button opacity-70 hover:opacity-100 transition-opacity"
+                  className="relative mr-2 mt-1 insert-block-button opacity-70 hover:opacity-100 transition-opacity"
                   onMouseEnter={() => setShowInsertTooltip(true)}
                   onMouseLeave={() => setShowInsertTooltip(false)}
                 >
@@ -992,9 +992,9 @@ export default function Dashboard() {
                     </svg>
                   </button>
 
-                  {/* Tooltip that appears on hover */}
+                  {/* Tooltip that appears on hover - IMPROVED POSITIONING */}
                   {showInsertTooltip && (
-                    <div className="absolute left-7 top-0 bg-gray-800 text-white text-xs rounded py-1 px-2 whitespace-nowrap z-10">
+                    <div className="absolute left-full ml-2 top-0 bg-gray-800 text-white text-xs rounded py-1 px-2 whitespace-nowrap z-10">
                       Insert block below
                     </div>
                   )}
